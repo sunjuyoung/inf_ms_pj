@@ -16,7 +16,7 @@ public class RequestUser {
     private String email;
 
     @NotNull(message = "password cannot be null")
-    @Size(min=10,message = "size")
+    @Size(min=3,message = "size")
     private String pwd;
 
     @NotNull(message = "name cannot be null")
