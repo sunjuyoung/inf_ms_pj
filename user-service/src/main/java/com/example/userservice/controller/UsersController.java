@@ -13,9 +13,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @RestController
-@RequestMapping("/user-service")
+//@RequestMapping("/user-service")
 @RequiredArgsConstructor
 public class UsersController {
 
@@ -40,6 +43,24 @@ public class UsersController {
         UserDto dto = modelMapper.map(user, UserDto.class);
         UserDto user1 = userService.createUser(dto);
         ResponseUser responseUser = modelMapper.map(user1, ResponseUser.class);
+        return ResponseEntity.ok().body(responseUser);
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<ResponseUser>> getUserAll(){
+        List<UserDto> dtoList = userService.getUserByAll();
+        List<ResponseUser> responseUserList = new ArrayList<>();
+        dtoList.forEach(i->{
+            responseUserList.add(modelMapper.map(i,ResponseUser.class));
+        });
+        return ResponseEntity.ok().body(responseUserList);
+
+    }
+
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<ResponseUser> getUser(@PathVariable("userId") String userId){
+        UserDto userDto = userService.getUserByUserId(userId);
+        ResponseUser responseUser = modelMapper.map(userDto,ResponseUser.class);
         return ResponseEntity.ok().body(responseUser);
     }
 

@@ -3,6 +3,8 @@ package com.example.userservice.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -24,4 +26,6 @@ public class UserEntity {
 
     @Column(nullable = false,length = 50)
     private String name;
+
+
 }
