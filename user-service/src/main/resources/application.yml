@@ -27,9 +27,15 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka
 
 
-greeting:
-  message: welcome e-commerce
-
 logging:
   level:
     com.example.userservice: DEBUG
+
+
+
+greeting:
+  message: welcome e-commerce
+
+token:
+  expiration_time: 3600000
+  secret: userservice_token

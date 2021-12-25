@@ -18,9 +18,9 @@ public class AppConfig {
     @Bean
     public ModelMapper modelMapper(){
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT)
-                .setDestinationNameTokenizer(NameTokenizers.UNDERSCORE)
-                .setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+                //.setDestinationNameTokenizer(NameTokenizers.UNDERSCORE)
+               // .setSourceNameTokenizer(NameTokenizers.UNDERSCORE);
         return modelMapper;
     }
 }
