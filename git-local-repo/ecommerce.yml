@@ -1,0 +1,7 @@
+token:
+  expiration_time: 3600000
+  secret: userservice_token
+
+
+gateway:
+  ip:  210.99.115.5
