@@ -31,7 +31,12 @@ public class UsersController {
 
     @GetMapping("/health_check")
     public String status(){
-        return String.format("working...port : %s",env.getProperty("local.server.port"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("local.port : "+env.getProperty("local.server.port"));
+        sb.append(" server.port : "+env.getProperty("server.port"));
+        sb.append(" token.secret : "+env.getProperty("token.secret"));
+        sb.append(" token expiration time : "+env.getProperty("token.expiration_time"));
+        return sb.toString();
     }
     @GetMapping("/welcome")
     public String welcome(){

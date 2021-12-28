@@ -33,9 +33,18 @@ logging:
 
 
 
+
 greeting:
   message: welcome e-commerce
 
-token:
-  expiration_time: 3600000
-  secret: userservice_token
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans
+
+#
+#token:
+#  expiration_time: 3600000
+
+#  secret: userservice_token
