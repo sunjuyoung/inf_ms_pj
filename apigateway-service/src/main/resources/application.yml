@@ -42,6 +42,17 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
+        - id: user-service #actuator
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user-service/actuator/**
+            - Method=POST,GET
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+
+
 
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
@@ -61,3 +72,8 @@ spring:
 
 token:
   secret: userservice_token
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh,health,beans,httptrace
