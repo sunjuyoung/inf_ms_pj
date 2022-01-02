@@ -28,14 +28,19 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public UserDto createUser(UserDto userDto) {
         userDto.setUserId(UUID.randomUUID().toString());
         UserEntity userEntity = modelMapper.map(userDto, UserEntity.class);
         userEntity.setEncryptedPwd(passwordEncoder.encode(userDto.getPwd()));
         UserEntity save = userRepository.save(userEntity);
-        UserDto responseDto = modelMapper.map(save, UserDto.class);
+        UserDto responseDto = getUserDto(save);
         return responseDto;
+    }
+
+    private UserDto getUserDto(UserEntity save) {
+        return modelMapper.map(save, UserDto.class);
     }
 
     @Override
