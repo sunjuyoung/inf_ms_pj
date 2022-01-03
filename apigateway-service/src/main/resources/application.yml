@@ -75,8 +75,8 @@ spring:
         #            - AddResponseHeader=second-response, second-response-header2
 
 
-token:
-  secret: userservice_token
+#token:
+#  secret: userservice_token
 management:
   endpoints:
     web:

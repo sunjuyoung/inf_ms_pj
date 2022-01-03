@@ -9,11 +9,11 @@ spring:
     port: 5672
     username: guest
     password: guest
-  datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:tcp://localhost/~/userservice
-    username: sa
-    password:
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:tcp://localhost/~/userservice
+#    username: sa
+#    password:
 
   jpa:
     hibernate:
