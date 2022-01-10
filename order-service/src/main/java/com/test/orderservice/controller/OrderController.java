@@ -1,9 +1,11 @@
 package com.test.orderservice.controller;
 
+import com.test.orderservice.dto.KafkaOrderDto;
 import com.test.orderservice.dto.OrderDto;
 import com.test.orderservice.dto.RequestOrder;
 import com.test.orderservice.dto.ResponseOrder;
 import com.test.orderservice.messagequeue.KafkaProducer;
+import com.test.orderservice.messagequeue.OrderProducer;
 import com.test.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -25,6 +28,7 @@ public class OrderController {
     private final Environment env;
     private final ModelMapper modelMapper;
     private final KafkaProducer kafkaProducer;
+    private final OrderProducer orderProducer;
 
 
     @GetMapping("/health_check")
@@ -38,11 +42,17 @@ public class OrderController {
                                                      @RequestBody RequestOrder requestOrder){
         OrderDto orderDto = modelMapper.map(requestOrder,OrderDto.class);
         orderDto.setUserId(userId);
-        OrderDto saveOrderDto = orderService.createOrder(orderDto);
-        ResponseOrder responseOrder = modelMapper.map(saveOrderDto, ResponseOrder.class);
+      /*  OrderDto saveOrderDto = orderService.createOrder(orderDto);
+        ResponseOrder responseOrder = modelMapper.map(saveOrderDto, ResponseOrder.class);*/
+
+        orderDto.setOrderId(UUID.randomUUID().toString());
+        orderDto.setTotalPrice(requestOrder.getQty()*requestOrder.getUnitPrice());
 
         /*send order to kafka*/
         kafkaProducer.send("example-catalog-topic",orderDto);
+        orderProducer.send("orders",orderDto);
+
+        ResponseOrder responseOrder = modelMapper.map(orderDto, ResponseOrder.class);
 
         return ResponseEntity.ok().body(responseOrder);
     }
