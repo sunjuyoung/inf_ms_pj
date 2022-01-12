@@ -1,5 +1,6 @@
 package com.example.userservice.service;
 
+import com.example.userservice.client.OrderServiceClient;
 import com.example.userservice.dto.ResponseOrder;
 import com.example.userservice.dto.ResponseUser;
 import com.example.userservice.dto.UserDto;
@@ -8,6 +9,8 @@ import com.example.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreaker;
+import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
@@ -32,8 +35,10 @@ public class UserServiceImpl implements UserService{
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final Environment env;
-    private final RestTemplate restTemplate;
+  //  private final Environment env;
+   // private final RestTemplate restTemplate;
+    private final OrderServiceClient orderServiceClient;
+    private final CircuitBreakerFactory circuitBreakerFactory;
 
     @Transactional
     @Override
@@ -59,15 +64,22 @@ public class UserServiceImpl implements UserService{
         UserDto userDto = modelMapper.map(userEntity, UserDto.class);
 
         /*RestTemplate*/
-        String orderUrl = String.format(env.getProperty("order-service.url"),userId);
-        //List<ResponseOrder> orders = new ArrayList<>();
+/*        String orderUrl = String.format(env.getProperty("order-service.url"),userId);
         ResponseEntity<List<ResponseOrder>> orderListResponse =
                 restTemplate.exchange(orderUrl, HttpMethod.GET, null,
                         new ParameterizedTypeReference<List<ResponseOrder>>() {
 
                          });
+        List<ResponseOrder> orderList = orderListResponse.getBody();*/
 
-        List<ResponseOrder> orderList = orderListResponse.getBody();
+        /*Feign client*/
+       // List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
+
+        CircuitBreaker circuitBreaker =  circuitBreakerFactory.create("circuitbreaker");
+        List<ResponseOrder> orderList =  circuitBreaker.run(()-> orderServiceClient.getOrders(userId),
+                throwable -> new ArrayList<>()); //에러발생시 빈배열 반환
+
+
         userDto.setOrders(orderList);
         return userDto;
     }

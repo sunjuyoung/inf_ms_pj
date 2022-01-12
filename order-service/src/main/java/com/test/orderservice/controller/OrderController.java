@@ -42,17 +42,18 @@ public class OrderController {
                                                      @RequestBody RequestOrder requestOrder){
         OrderDto orderDto = modelMapper.map(requestOrder,OrderDto.class);
         orderDto.setUserId(userId);
-      /*  OrderDto saveOrderDto = orderService.createOrder(orderDto);
-        ResponseOrder responseOrder = modelMapper.map(saveOrderDto, ResponseOrder.class);*/
+        OrderDto saveOrderDto = orderService.createOrder(orderDto);
+        ResponseOrder responseOrder = modelMapper.map(saveOrderDto, ResponseOrder.class);
 
-        orderDto.setOrderId(UUID.randomUUID().toString());
-        orderDto.setTotalPrice(requestOrder.getQty()*requestOrder.getUnitPrice());
+
 
         /*send order to kafka*/
-        kafkaProducer.send("example-catalog-topic",orderDto);
-        orderProducer.send("orders",orderDto);
+/*        orderDto.setOrderId(UUID.randomUUID().toString());
+        orderDto.setTotalPrice(requestOrder.getQty()*requestOrder.getUnitPrice());*/
+/*        kafkaProducer.send("example-catalog-topic",orderDto);
+        orderProducer.send("orders",orderDto);*/
 
-        ResponseOrder responseOrder = modelMapper.map(orderDto, ResponseOrder.class);
+        //ResponseOrder responseOrder = modelMapper.map(orderDto, ResponseOrder.class);
 
         return ResponseEntity.ok().body(responseOrder);
     }
