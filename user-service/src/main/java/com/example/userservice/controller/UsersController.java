@@ -4,6 +4,7 @@ import com.example.userservice.dto.RequestUser;
 import com.example.userservice.dto.ResponseUser;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.service.UserService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpRequest;
@@ -30,6 +31,7 @@ public class UsersController {
     private String welcomeMessage;*/
 
     @GetMapping("/health_check")
+    @Timed(value = "users.status",longTask = true)
     public String status(){
         StringBuilder sb = new StringBuilder();
         sb.append("local.port : "+env.getProperty("local.server.port"));
@@ -39,6 +41,7 @@ public class UsersController {
         return sb.toString();
     }
     @GetMapping("/welcome")
+    @Timed(value = "users.welcome",longTask = true)
     public String welcome(){
         return env.getProperty("greeting.message");
     }
