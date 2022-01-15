@@ -57,8 +57,6 @@ spring:
             - RewritePath=/user-service/(?<segment>.*), /$\{segment}
 
 
-
-
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
@@ -70,9 +68,15 @@ spring:
           uri: lb://ORDER-SERVICE
           predicates:
               - Path=/order-service/**
+        - id: order-service #actuator
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/order-service/actuator/**
+            - Method=GET
           filters:
-        #            - AddRequestHeader=second-request, second-request-header2
-        #            - AddResponseHeader=second-response, second-response-header2
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/order-service/(?<segment>.*), /$\{segment}
+
 
 
 #token:
