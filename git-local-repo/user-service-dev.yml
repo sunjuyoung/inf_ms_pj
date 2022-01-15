@@ -1,0 +1,7 @@
+token:
+  expiration_time: 8640000
+  secret: my_token_dev
+
+
+gateway:
+  ip: 218.147.255.133

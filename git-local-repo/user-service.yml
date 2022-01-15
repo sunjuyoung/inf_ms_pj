@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/test
+    username: root
+    password: '{cipher}AQA7Lvq0EGYDnrpudEGeMrOSU3RQPHPzmHSacov5stn0yHaUPQPmUhir7LSdDfpALPXc5NTzJ5ktPwDq3PPnALvxpStcA6RMWQhRbtmzngzokQl76zFFdzSw8PV++HG0Qd425gAHuDfU01XFxpIE/8DE6Sm+CYyGL5MYSfTxKi/bp4QrF44Zrl0H3bF8J6ca0cxYQ9/tawceBG5h5lQiAtcpiuZ7KaFlMezRU8An0BfU2Lr+b3r7XcnkpXLgGo1Vk1HjeJyLBwdrBwc85112KO849V4BMRuNDcg9nWf/2uTsRPA/RDdHKH9R/FIN78KaAfcTXyibDHueubVP7rY3lGIDrJn/TDNBIv77Uo/V3Ndz/J+qa0dnIkLXL75k1TgYXp4='
+
+token:
+  expiration_time: 8640000
+  secret: user_service_native_token
+
+
+gateway:
+  ip: 218.147.255.133
+
+
+order=service:
+  url: http://127.0.0.1:8000/order-service/%s/orders
+

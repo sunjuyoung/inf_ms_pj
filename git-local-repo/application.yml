@@ -1,0 +1,7 @@
+token:
+  expiration_time: 8640000
+  secret: application_token_native_changed#3
+
+
+gateway:
+  ip: 121.157.26.182

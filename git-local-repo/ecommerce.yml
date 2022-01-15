@@ -1,7 +1,7 @@
 token:
-  expiration_time: 3600000
-  secret: userservice_token
+  expiration_time: 8640000
+  secret: '{cipher}AQAAwtaRNMstOGahOjwljWackcMa19f0lM+GlAHUzTv9M6u6I+LlQS60fQ2XqD95m9EI32T/rTKLLPY6H7jRBq4wB98/gMKOqpGOpUaJ5t/AZtdG6P8zsPjpwwmzJV6oCnQ/zaKX+KnKQ/hWdixeC8DpausnDXkPullU8696AGD92trAE98WzSbKqdcCfuysekIYxvc1ELjqpbzgSuaS5zpyInUaIIpg2i1vNefVcIW3IRud+XS/YRezF+6PJWfQ4e1Jno0+lTvGifbkuat9DOgh6RwJFQhXK9Q8ANZBkadOJDfHJLH7EtFc/iZmZwCSPM31gytCM14eIkzKfGgEchsCBH5U8N44Rzv6aG1PvP2HQp8JTFA+CWUi7VyAyKzxK4PG+m2UGOZN4l0keFpCjKZe'
 
 
 gateway:
-  ip:  210.99.115.5
+  ip: 121.157.26.182
